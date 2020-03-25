@@ -22,4 +22,14 @@ session_start();
         <a href="products.php"><li>Products</li></a>
         <a href=""><li>Contact</li></a>
     </ul>
+    <ul>
+        <a href="login.php">
+            <li>Login</li>
+        </a>
+        <?php if(isset($_SESSION['loggedIn'])) { ?>
+        <a href="">
+            <li>Logout</li>
+        </a>
+        <?php } ?>
+    </ul>
 </header>
