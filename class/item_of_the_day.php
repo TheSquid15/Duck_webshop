@@ -1,4 +1,5 @@
 <?php
+
     class item_of_the_day {
 
         private $DB_connect;
@@ -7,7 +8,7 @@
         function __construct()
         {
             $this->DB_connect = new connectionController();
-             
+            $this->item_of_the_day();
         }
 
         public function item_of_the_day() {
@@ -18,13 +19,24 @@
             if($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     ?>
-                    <div>
-                        <img src="" alt="">
-                        <div></div>
+                    <div class="item_of_the_day_controller">
+                        <img src="<?php echo $row['productImage']?>" alt="">
+                        <h2 class="product_title"><?php echo $row['name']?></h2>
+                        <div class="percentageBox"><h3>-<?php echo $row['percentage']?>%</h3></div>
                         <div id="deal_time" class="time"></div>
                     </div>
                     <?php
+
+                    $this->deal_time = $row['end_date'];
                 }
+            }
+            else {
+                ?>
+                    <div class="item_of_the_day_controller">
+                        <img src="" alt="">
+                        <h3>New deals, every day!</h3>
+                    </div>
+                <?php
             }
         }
     }
