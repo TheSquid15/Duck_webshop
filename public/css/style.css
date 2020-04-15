@@ -67,7 +67,7 @@ header nav ul {
     right: 15px;
     font-size: 3.0em;
     padding: 30px;
-    background-image: url('../resources/percentage_bubble.svg');
+    background-image: url('../../resources/percentage_bubble.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

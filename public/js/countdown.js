@@ -1,25 +1,3 @@
-<?php
-require('includes/header.php');
-spl_autoload_register(function($class) {
-    include "class/" . $class . ".php";
-});
-?>
-
-<section class="product_of_the_day_container">
-    <?php 
-        $dealOfTheDay = new item_of_the_day();
-    ?>
-</section>
-<section class="product_container">
-    <?php
-        $items = new display_items();
-    ?>
-</section>
-
-<?php var_dump($dealOfTheDay->deal_time)?>
-
-<script>
-var countDownDate = new Date("<?php echo $dealOfTheDay->deal_time; ?>").getTime();
 
 var x = setInterval(function() {
 
@@ -40,4 +18,3 @@ var x = setInterval(function() {
     document.getElementById("deal_time").innerHTML = "EXPIRED";
   }
 }, 1000);
-</script>

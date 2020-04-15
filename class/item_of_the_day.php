@@ -1,13 +1,13 @@
 <?php
 
-    class item_of_the_day {
+    class item_of_the_day extends DB_model {
 
         private $DB_connect;
         public $deal_time;
 
         function __construct()
         {
-            $this->DB_connect = new connectionController();
+            $this->DB_connect = new DB_model();
             $this->item_of_the_day();
         }
 

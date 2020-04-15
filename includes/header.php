@@ -1,6 +1,12 @@
 <?php
+/* spl_autoload_register(function($class) {
+    include "../model/" . $class . ".php";
+}); */
+
+include("../includes/const.php");
+
 spl_autoload_register(function($class) {
-    include "./class/" . $class . ".php";
+    include "../controller/" . $class . ".php";
 });
 
 session_start();
@@ -13,12 +19,12 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Duck</title>
-    <link rel="stylesheet" href="./includes/style.css">
-    <link rel="icon" href="resources/duckLogo.png">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="icon" href="../resources/duckLogo.png">
 </head>
 <body>
 <header>
-    <a href="index.php"><img src="resources/duckLogo.png" alt="" class="shop_logo"></a>
+    <a href="index.php"><img src="../resources/duckLogo.png" alt="" class="shop_logo"></a>
     <nav>
         <ul class="main-menu">
             <a href="index.php"><li>Home</li></a>
