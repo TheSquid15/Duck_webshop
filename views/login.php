@@ -8,29 +8,9 @@ if(login_controller::is_logged_in()){
 } 
 
 if (isset($_POST["submit"])) {
-
-    $user = trim(htmlspecialchars($_POST["username"]));
-    $password = trim(htmlspecialchars($_POST["password"]));
-    $sql = "SELECT * FROM user WHERE username = {'$user'} LIMIT 1";
-    $prep = $login_controller->sql_query($sql);
-    /* $prep = $login_controller->DB_connect->conn->prepare("SELECT * FROM user WHERE username = ? LIMIT 1");
-    $prep->bind_param("s", $preppedUser);
-    $preppedUser = $user;
-    $prep->execute(); */
-    $DBresult = $login_controller->DBresult;
-
-    if (count($DBresult) == 1){
-        if($login_controller->log_in($DBresult, $password) == 1){
-            if(isset($_SESSION['loggedIn']) && isset($_SESSION['user']) && isset($_SESSION['username'])){
-                header('index.php');
-            }
-        }
-    }
-    else {
-        echo "Sorry, that username/password does not exist";
-    }
-}
-else {
+    $login_controller->prepare_login();
+   }
+   else {
     if(isset($_GET['logout']) && $_GET['logout'] == 1) {
         echo "You've been logged out";
     }
@@ -49,6 +29,7 @@ else {
 </section>
 
 <?php
+echo session_status();
 /* if(isset($_POST['submit'])) {
 
     $login_controller->sanatize_input($_POST['username'], $_POST['password']);

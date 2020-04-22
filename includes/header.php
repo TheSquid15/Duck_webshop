@@ -1,4 +1,5 @@
 <?php
+session_start();
 /* spl_autoload_register(function($class) {
     include "../model/" . $class . ".php";
 }); */
@@ -8,8 +9,6 @@ include("../includes/const.php");
 spl_autoload_register(function($class) {
     include "../controller/" . $class . ".php";
 });
-
-session_start();
 ?>
 
 <!DOCTYPE html>

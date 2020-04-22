@@ -8,13 +8,8 @@ class login_controller extends DB_model{
     public $user;
     public $password;
 
-    function __construct()
-    {
-        $this->DB_connect = new DB_model();
-    }
-
     public static function is_logged_in() {
-        return isset($_SESSION['user_id']);
+        return isset($_SESSION['loggedIn']);
     }
 
     public static function login_guard() {
@@ -29,15 +24,42 @@ class login_controller extends DB_model{
     } */
 
     public function log_in($user, $password) {
-        $DBuser = $user[0];
-        if(!password_verify($password, $DBuser['password'])){
+        if(!password_verify($password, $user['password'])){
             return false;
         }
         else {
             $_SESSION['loggedIn'] = true;
-            $_SESSION['user'] = $DBuser['userID'];
-            $_SESSION['username'] = $DBuser['username'];
+            $_SESSION['user'] = $user['userID'];
+            $_SESSION['username'] = $user['username'];
             return true;
+        }
+    }
+
+    public function prepare_login() {
+        $user = trim(htmlspecialchars($_POST["username"]));
+        $password = trim(htmlspecialchars($_POST["password"]));
+        $prep = $this->sql_query("SELECT * FROM `user` WHERE username = 'manager' LIMIT 1");
+        
+        /* $prep = $login_control$rhiler->DB_connect->conn->prepare("SELECT * FROM user WHERE username = ? LIMIT 1");
+        $prep->bind_param("s", $preppedUser);
+        $preppedUser = $user;
+        $prep->execute(); */
+        $DBresult = $prep->fetch_assoc(); 
+
+        var_dump($DBresult);
+
+        if ($DBresult['username'] == $user){
+            if($this->log_in($DBresult, $password) == 1){
+                if(isset($_SESSION['loggedIn']) && isset($_SESSION['user']) && isset($_SESSION['username'])){
+                    header('index.php');
+                }
+            }
+            else {
+                echo "Sorry, that username/password does not exist";
+            }
+        }
+        else {
+            echo "Sorry, that username/password does not exist";
         }
     }
 
