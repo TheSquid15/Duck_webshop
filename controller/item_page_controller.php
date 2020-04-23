@@ -10,7 +10,7 @@ class item_page_controller extends DB_model {
 
         $sql = "SELECT * FROM product 
                 JOIN category ON product.categoryID = category.categoryID
-                JOIN product_of_the_day ON product.productID = product_of_the_day.productID
+                LEFT JOIN product_of_the_day ON product.productID = product_of_the_day.productID
                 ORDER BY name asc";
         $result = $this->sql_query($sql);
         

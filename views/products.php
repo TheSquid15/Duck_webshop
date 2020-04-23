@@ -16,6 +16,8 @@ $items = new item_page_controller();
 </section>
 
 <script>
-    var countDownDate = new Date("<?php echo $dealOfTheDay->deal_time; ?>").getTime();
+    var countDownDate = new Date("<?php echo $items->deal_time; ?>").getTime();
 </script>
-<script src="<?php echo ROOT?>public/js/countdown.js"></script>
+<script src="../public/js/countdown.js">
+
+</script>
