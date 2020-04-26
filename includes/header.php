@@ -60,6 +60,13 @@ spl_autoload_register(function($class) {
         <div class="navbar-nav">
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link active" href="contact.php">Contact</a>
+        <?php
+        if(isset($_SESSION['admin'])) { 
+            if($_SESSION['admin'] == true) {?>
+        <a class="nav-item nav-link active" href="admin_dashboard.php">Admin Panel</a>
+        <?php }
+        }
+        ?>
         </div>
     </div>
     <div class="navbar-nav">

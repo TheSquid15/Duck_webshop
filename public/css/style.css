@@ -129,3 +129,43 @@ header nav ul {
     -o-transform:rotate(-20deg);
     transform:rotate(-20deg);
   }
+
+  .sidemenu {
+      width: 250px;
+      min-height: 100vh;
+      position: sticky;
+      top: 0;
+      background-color: #d8d8d8;
+    }   
+
+  .product_panel {
+      background-color: rgb(245, 245, 245);
+      border-radius: 5px;
+  }
+
+  .product_row {
+      background-color: rgb(226, 226, 226);
+      border-radius: 10px;
+      padding: 8px 0 8px 0;
+  }
+
+  .admin_old_price {
+      position: relative;
+      width: 20px;
+  }
+
+  .admin_old_price::before {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    right: 0;
+    border-top: 2px solid #db0b0b;
+    border-color: inherit;
+  
+    -webkit-transform:rotate(-45deg);
+    -moz-transform:rotate(-45deg);
+    -ms-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+    transform:rotate(-45deg);   
+  }

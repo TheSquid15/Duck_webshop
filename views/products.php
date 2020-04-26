@@ -9,10 +9,12 @@ $items = new item_page_controller();
         $items->item_of_the_day();
     ?>
 </section>
-<section class="product_container">
-    <?php
-        $items->show_items();
-    ?>
+<section class="container pt-4">
+    <div class="row">
+        <?php
+            $items->show_items();
+        ?>
+    </div>
 </section>
 
 <script>
