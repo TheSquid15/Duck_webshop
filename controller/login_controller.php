@@ -31,6 +31,9 @@ class login_controller extends DB_model{
             $_SESSION['loggedIn'] = true;
             $_SESSION['user'] = $user['userID'];
             $_SESSION['username'] = $user['username'];
+            if($user['userID'] == 1) {
+                $_SESSION['admin'] = true;
+            }
             return true;
         }
     }
@@ -44,7 +47,7 @@ class login_controller extends DB_model{
         $prep->bind_param("s", $preppedUser);
         $preppedUser = $user;
         $prep->execute(); */
-        $DBresult = $prep->fetch_assoc(); 
+        $DBresult = $prep->fetch_assoc();
 
         var_dump($DBresult);
 

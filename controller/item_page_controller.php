@@ -18,7 +18,7 @@ class item_page_controller extends DB_model {
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 ?>
-                    <div class="item" id="item_<?php echo $row['productID']?>">
+                    <div class="item col-md-4" id="item_<?php echo $row['productID']?>">
                         <img src="<?php echo $row['productImage']?>" alt="">
                         <h2><?php echo $row['name']?></h2>
                         <?php if($row['is_item_of_the_day'] == true){
