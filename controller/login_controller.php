@@ -46,6 +46,10 @@ class login_controller extends DB_model{
         $prep->bind_param("s", $preppedUser);
         $preppedUser = $user;
         $prep->execute(); */
+<<<<<<< HEAD
+=======
+        $DBresult = $prep->fetch_assoc();
+>>>>>>> e2d15aa780a54a20a9aef31367f478be6b952653
 
        /*  $prep = $this->conn->prepare("SELECT * FROM `user` WHERE username = ? LIMIT 1");
         $prep->bind_param("s", $preppedinput);
