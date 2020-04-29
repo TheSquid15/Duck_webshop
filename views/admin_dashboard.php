@@ -26,7 +26,7 @@ if(isset($_GET['delete']) && isset($_GET['item_id'])) {
             <a href="admin_dashboard.php?panel=category"><li class="list-group-item">Categories</li></a>
         </ul>
     </div>
-    <div class="container"> <?php 
+    <div class="container p-4"> <?php 
         if(isset($_GET['panel'])) {
             if($_GET['panel'] == "products") {
                 include('../components/product_panel.php');

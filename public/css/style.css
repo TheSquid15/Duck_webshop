@@ -132,7 +132,7 @@ header nav ul {
 
   .sidemenu {
       width: 250px;
-      min-height: 100vh;
+      height: 100%;
       position: sticky;
       top: 0;
       background-color: #d8d8d8;

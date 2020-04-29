@@ -41,15 +41,22 @@ class login_controller extends DB_model{
     public function prepare_login() {
         $san_user = trim(htmlspecialchars($this->user));
         $san_password = trim(htmlspecialchars($this->password));
-        $prep = $this->sql_query("SELECT * FROM `user` WHERE username = 'manager' LIMIT 1");
-        
+        $prep = $this->sql_query("SELECT * FROM `user` WHERE username = '$san_user' LIMIT 1");
         /* $prep = $login_control$rhiler->DB_connect->conn->prepare("SELECT * FROM user WHERE username = ? LIMIT 1");
         $prep->bind_param("s", $preppedUser);
         $preppedUser = $user;
         $prep->execute(); */
-        $DBresult = $prep->fetch_assoc();
 
-        var_dump($DBresult);
+       /*  $prep = $this->conn->prepare("SELECT * FROM `user` WHERE username = ? LIMIT 1");
+        $prep->bind_param("s", $preppedinput);
+
+        $preppedinput = $san_user;
+        $prep->execute();
+
+        $result = $prep->get_result();
+        $DBresult = $result->fetch_array();
+ */
+        $DBresult = $prep->fetch_assoc();
 
         if ($DBresult["username"] == $san_user){
             if($this->log_in($DBresult, $san_password) == 1){

@@ -7,16 +7,22 @@ class admin_controller extends DB_model {
     public function delete_item($delete_id) {
         $san_id = trim(htmlspecialchars($delete_id));
         $sql = "DELETE FROM product WHERE productID = $san_id";
+        $imageSQL = "SELECT productImage FROM product WHERE productID = $san_id";
+        $imageQuery = $this->sql_query($imageSQL);
+        $imageToDelete = $imageQuery->fetch_assoc();
+
+        unlink($imageToDelete["productImage"]);
 
         $this->sql_query($sql);
     }
 
     public function product_panel() {
 
-        $sql = "SELECT * FROM product 
-                JOIN category ON product.categoryID = category.categoryID
-                LEFT JOIN product_of_the_day ON product.productID = product_of_the_day.productID
-                ORDER BY name asc";
+        $sql = "SELECT p.productID, p.name, p.productImage, p.price, p.categoryID, c.categoryName, pd.end_date, pd.percentage, pd.is_item_of_the_day
+                FROM product p
+                JOIN category c ON p.categoryID = c.categoryID
+                LEFT JOIN product_of_the_day pd ON p.productID = pd.productID 
+                ORDER BY name ASC";
         $result = $this->sql_query($sql);
 
         if($result->num_rows > 0) {

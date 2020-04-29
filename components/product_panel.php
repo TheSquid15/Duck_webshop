@@ -1,6 +1,6 @@
 <?php ?>
 
-<div class="container mt-5 p-4 product_panel">
+<div class="container mt-2 p-4 product_panel">
     <h3>Products</h3>
     <div class="row">
         <div class="col-1 pl-4 d-flex align-items-center">
@@ -20,5 +20,6 @@
         </div>
     </div>
     <?php $dashboard->product_panel();?>
+    <a href="upload_item.php"><button class="btn btn-primary">Add item</button></a>
 </div>
 

@@ -8,10 +8,11 @@ class item_page_controller extends DB_model {
 
     public function show_items() {
 
-        $sql = "SELECT * FROM product 
-                JOIN category ON product.categoryID = category.categoryID
-                LEFT JOIN product_of_the_day ON product.productID = product_of_the_day.productID
-                ORDER BY name asc";
+        $sql = "SELECT p.productID, p.name, p.productImage, p.price, p.categoryID, c.categoryName, pd.end_date, pd.percentage, pd.is_item_of_the_day
+                FROM product p
+                JOIN category c ON p.categoryID = c.categoryID
+                LEFT JOIN product_of_the_day pd ON p.productID = pd.productID 
+                ORDER BY name ASC";
         $result = $this->sql_query($sql);
         
         
