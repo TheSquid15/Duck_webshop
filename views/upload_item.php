@@ -1,4 +1,10 @@
 <?php 
+session_start();
+
+spl_autoload_register(function($class) {
+    include "../controller/" . $class . ".php";
+});
+
 require('../includes/header.php');
 
 $upload_controller = new upload_controller();

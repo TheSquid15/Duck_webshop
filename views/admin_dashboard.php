@@ -1,21 +1,28 @@
 <?php
-include('../includes/header.php');
+session_start();
 
-/* if(login_controller::login_guard()){
-    header('Location: login.php');
-}  */
+spl_autoload_register(function($class) {
+    include "../controller/" . $class . ".php";
+});
 
-if(!isset($_SESSION['admin']) && $_SESSION['admin'] == false) {
+if(!isset($_SESSION['admin']) && $_SESSION['admin'] !== true) {
     header('Location: index.php');
 }
 
 $dashboard = new admin_controller();
 
 if(isset($_GET['delete']) && isset($_GET['item_id'])) {
-    $item_to_delete = $_GET['item_id'];
-
-    $dashboard->delete_item($item_to_delete);
+    if($_SESSION["admin"]  == true) {
+        $item_to_delete = $_GET['item_id'];
+        $dashboard->delete_item($item_to_delete);
+    }
+    else {
+        header('Location: index.php');
+    }
+    
 }
+
+require('../includes/header.php');
 ?>
 <div class="d-flex" id="admin_wrapper">
     <div class="sidemenu p-2">

@@ -1,5 +1,9 @@
 <?php 
-include('../includes/header.php');
+session_start();
+
+spl_autoload_register(function($class) {
+    include "../controller/" . $class . ".php";
+});
 
 $login_controller = new login_controller();
 
@@ -7,10 +11,15 @@ if(login_controller::is_logged_in()){
     header('Location: index.php');
 } 
 
+require('../includes/header.php');
+
 if (isset($_POST["submit"])) {
     $login_controller->user = $_POST["username"];
     $login_controller->password = $_POST["password"];
     $login_controller->prepare_login();
+    var_dump($login_controller->user);
+    var_dump($login_controller->password);
+
    }
    else {
     if(isset($_GET['logout']) && $_GET['logout'] == 1) {
@@ -25,11 +34,11 @@ if (isset($_POST["submit"])) {
         <div class="col-4 justify-content-center"> 
             <form method="POST" action="">
                 <div class="form-group">
-                    Username: <br>
-                    <input type="text" name="username"><br><br>
-                    Password: <br>
-                    <input type="password" name="password"><br><br>
-                    <input type="submit" name="submit">
+                    <label for="username">Username:</label>
+                    <input class="w-100 form-control" type="text" id="username" name="username" placeholder="Username"><br><br>
+                    <label for="password">Password:</label>
+                    <input class="w-100 form-control" type="password" id="password" name="password" placeholder="Password"><br><br>
+                    <input class="w-100 form-control" type="submit" name="submit">
                 </div>
             </form>
         </div>

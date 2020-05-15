@@ -1,7 +1,13 @@
 <?php
-require('../includes/header.php');
+session_start();
+
+spl_autoload_register(function($class) {
+    include "../controller/" . $class . ".php";
+});
 
 $items = new item_page_controller();
+
+require('../includes/header.php');
 ?>
 
 <section class="product_of_the_day_container">

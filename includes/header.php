@@ -1,14 +1,15 @@
 <?php
-session_start();
 /* spl_autoload_register(function($class) {
     include "../model/" . $class . ".php";
 }); */
 
-include("../includes/const.php");
+/* include("../includes/const.php"); */
 
 spl_autoload_register(function($class) {
     include "../controller/" . $class . ".php";
 });
+
+header('Content-Type: text/html; charset=utf-8');
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +22,7 @@ spl_autoload_register(function($class) {
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="icon" href="../resources/duckLogo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 <!-- <header class="container-fluid navbar navbar-expand-lg navbar-dark bg-dark">

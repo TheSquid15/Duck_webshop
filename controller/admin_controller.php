@@ -1,4 +1,5 @@
 <?php
+require("../includes/const.php");
 
 require(MODEL);
 
@@ -14,6 +15,8 @@ class admin_controller extends DB_model {
         unlink($imageToDelete["productImage"]);
 
         $this->sql_query($sql);
+        header("Location: admin_dashboard.php");
+        echo "<div class='alert-success'>Item deleted successfully</div>";
     }
 
     public function product_panel() {

@@ -1,4 +1,5 @@
-<?php 
+<?php
+require("../includes/const.php");
 
 include(MODEL);
 
@@ -24,7 +25,7 @@ class login_controller extends DB_model{
     } */
 
     public function log_in($user, $password) {
-        if($password !== $user['password']){
+        if(!password_verify($password, $user['password'])) {
             return false;
         }
         else {
@@ -46,10 +47,6 @@ class login_controller extends DB_model{
         $prep->bind_param("s", $preppedUser);
         $preppedUser = $user;
         $prep->execute(); */
-<<<<<<< HEAD
-=======
-        $DBresult = $prep->fetch_assoc();
->>>>>>> e2d15aa780a54a20a9aef31367f478be6b952653
 
        /*  $prep = $this->conn->prepare("SELECT * FROM `user` WHERE username = ? LIMIT 1");
         $prep->bind_param("s", $preppedinput);
@@ -80,8 +77,23 @@ class login_controller extends DB_model{
         }
     }
 
-    public function logout() {
+    public function createUser($username, $password, $email, $fname, $lname) {
+        $statement = $this->conn->prepare("INSERT INTO user VALUES (NULL, ?, ?, ?, ?, ?)");
+        $statement->bind_param("sssss", $user_username, $user_password, $user_email, $user_fname, $user_lname);
+        $iterations = ["cost" => 10];
 
+        $user_username = trim(htmlspecialchars($username));
+        $sanatized_pass = trim(htmlspecialchars($password));
+        $user_password = password_hash($sanatized_pass, PASSWORD_BCRYPT, $iterations);
+        $user_email = $email;
+        $user_fname = trim(htmlspecialchars($fname));
+        $user_lname = trim(htmlspecialchars($lname));
+        $statement->execute();
+
+        $_SESSION["loggedIn"] = true;
+        $_SESSION["username"] = trim(htmlspecialchars($username));
+
+        $statement->close();
     }
 
 }

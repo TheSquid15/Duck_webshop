@@ -1,4 +1,5 @@
 <?php
+require("../includes/const.php");
 
 include(MODEL);
 
