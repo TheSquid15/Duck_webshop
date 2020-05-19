@@ -92,6 +92,10 @@ class login_controller extends DB_model{
 
         $_SESSION["loggedIn"] = true;
         $_SESSION["username"] = trim(htmlspecialchars($username));
+        $checkUser = trim(htmlspecialchars($username));
+        $get_user_id = $this->sql_query("SELECT * FROM user WHERE username = '$checkUser'");
+        $userID = $get_user_id->fetch_assoc();
+        $_SESSION["user"] = $userID["userID"];
 
         $statement->close();
     }

@@ -20,6 +20,6 @@
         </div>
     </div>
     <?php $dashboard->product_panel();?>
-    <a href="upload_item.php"><button class="btn btn-primary">Add item</button></a>
+    <a href="upload_item.php"><button class="btn btn-primary mt-3">Add item</button></a>
 </div>
 

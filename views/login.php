@@ -35,9 +35,9 @@ if (isset($_POST["submit"])) {
             <form method="POST" action="">
                 <div class="form-group">
                     <label for="username">Username:</label>
-                    <input class="w-100 form-control" type="text" id="username" name="username" placeholder="Username"><br><br>
+                    <input class="w-100 form-control" type="text" id="username" name="username" placeholder="Username"><br>
                     <label for="password">Password:</label>
-                    <input class="w-100 form-control" type="password" id="password" name="password" placeholder="Password"><br><br>
+                    <input class="w-100 form-control" type="password" id="password" name="password" placeholder="Password"><br>
                     <input class="w-100 form-control" type="submit" name="submit">
                 </div>
             </form>

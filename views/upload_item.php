@@ -50,14 +50,16 @@ if(isset($_POST["submit"])) {
 }
 ?>
 
-<section>
+<section class="mt-4">
     <div class="container">
         <div class="row align-items-center justify-content-center">
             <div class="col-sm-5">
                 <form action="" name="upload" method="POST" enctype="multipart/form-data">
-                    <b><label for="item_name">Item name: </label></b><input type="text" name="item_name"><br>
-                    <b><label for="price">Item price (in bread crumbs): </label></b><input type="number" name="price"><br>
-                    <select name="category" id="">
+                    <b><label for="item_name">Item name: </label></b>
+                    <input class="form-control" type="text" name="item_name"><br>
+                    <b><label for="price">Item price (in bread crumbs): </label></b>
+                    <input class="form-control" type="number" name="price"><br>
+                    <select class="form-control" name="category" id="">
                         <?php 
                             if($result->num_rows > 0) {
                                 $i = 1;
@@ -68,8 +70,8 @@ if(isset($_POST["submit"])) {
                             }
                         ?>
                     </select><br>
-                    <input type="file" name="image">
-                    <input type="submit" name="submit">
+                    <input class="form-control-file" type="file" name="image">
+                    <input class="form-control mt-3" type="submit" name="submit">
                 </form>
             </div>
         </div>

@@ -21,7 +21,7 @@ class item_page_controller extends DB_model {
             while($row = $result->fetch_assoc()) {
                 ?>
                     <div class="item col-md-4" id="item_<?php echo $row['productID']?>">
-                        <img src="<?php echo $row['productImage']?>" alt="">
+                        <img src="../resources/<?php echo $row['productImage']?>" alt="">
                         <h2><?php echo $row['name']?></h2>
                         <?php if($row['is_item_of_the_day'] == true){
                             $price_reduct = ($row['price'] * (1 - ($row['percentage']/100)));
@@ -31,7 +31,7 @@ class item_page_controller extends DB_model {
                         <?php }
                         else {
                             ?>
-                        <h3 class="current_price"><?php echo $row['price']?></h3>
+                        <h3 class="current_price"><?php echo $row['price']?> slices of bread</h3>
                             <?php
                         }
                         ?>
@@ -51,7 +51,7 @@ class item_page_controller extends DB_model {
             while($row = $result->fetch_assoc()) {
                 ?>
                 <div class="item_of_the_day_controller">
-                    <img src="<?php echo $row['productImage']?>" alt="">
+                    <img src="../resources/<?php echo $row['productImage']?>" alt="">
                     <h2 class="product_title"><?php echo $row['name']?></h2>
                     <div class="percentageBox"><h3>-<?php echo $row['percentage']?>%</h3></div>
                     <div id="deal_time" class="time"></div>

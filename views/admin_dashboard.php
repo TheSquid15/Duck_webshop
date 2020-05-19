@@ -11,10 +11,20 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] !== true) {
 
 $dashboard = new admin_controller();
 
-if(isset($_GET['delete']) && isset($_GET['item_id'])) {
+if(isset($_GET['delete'])) {
     if($_SESSION["admin"]  == true) {
-        $item_to_delete = $_GET['item_id'];
-        $dashboard->delete_item($item_to_delete);
+        if(isset($_GET['item_id'])){
+            $item_to_delete = $_GET['item_id'];
+            $dashboard->delete_item($item_to_delete);
+        }
+        elseif(isset($_GET['category_id'])){
+            $item_to_delete = $_GET['category_id'];
+            $dashboard->delete_category($item_to_delete);
+        }
+        elseif(isset($_GET['message_id'])){
+            $item_to_delete = $_GET['message_id'];
+            $dashboard->delete_message($item_to_delete);
+        }
     }
     else {
         header('Location: index.php');
@@ -22,7 +32,15 @@ if(isset($_GET['delete']) && isset($_GET['item_id'])) {
     
 }
 
+if(isset($_GET['success']) && $_GET['success'] == 1) {
+    $message = "Item succesfully deleted";
+}
+
 require('../includes/header.php');
+
+if(isset($message)) {
+    echo "<div class='alert-success'>$message</div>";
+}
 ?>
 <div class="d-flex" id="admin_wrapper">
     <div class="sidemenu p-2">
@@ -31,6 +49,9 @@ require('../includes/header.php');
             <a href="admin_dashboard.php"><li class="list-group-item">All</li></a>
             <a href="admin_dashboard.php?panel=products"><li class="list-group-item">Products</li></a>
             <a href="admin_dashboard.php?panel=category"><li class="list-group-item">Categories</li></a>
+            <a href="admin_dashboard.php?panel=message"><li class="list-group-item">Messages</li></a>
+            <a href="admin_dashboard.php?panel=general_info"><li class="list-group-item">General Information</li></a>
+            <a href="admin_dashboard.php?panel=address"><li class="list-group-item">Add Address</li></a>
         </ul>
     </div>
     <div class="container p-4"> <?php 
@@ -40,6 +61,15 @@ require('../includes/header.php');
             }
             if($_GET['panel'] == "category") {
                 include('../components/category_panel.php');
+            }
+            if($_GET['panel'] == "message") {
+                include('../components/messages_panel.php');
+            }
+            if($_GET['panel'] == "general_info") {
+                include('../components/general_information_panel.php');
+            }
+            if($_GET['panel'] == "address") {
+                include('../components/address_panel.php');
             }
         }
         else {

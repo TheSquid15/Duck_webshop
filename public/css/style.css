@@ -64,10 +64,10 @@ header nav ul {
 .item_of_the_day_controller .percentageBox {
     position: absolute;
     color: white;
-    bottom: 5px;
+    bottom: -25px;
     right: 15px;
     font-size: 3.0em;
-    padding: 30px;
+    padding: 40px;
     background-image: url('../../resources/percentage_bubble.svg');
     background-size: contain;
     background-repeat: no-repeat;
@@ -80,7 +80,21 @@ header nav ul {
     left: 20px;
     font-size: 3.0em;
     margin: 0;
+    font-weight: bold;
     color: white;
+}
+
+.item_of_the_day_controller .time {
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    font-size: 40px;
+    font-weight: 500;
+    color: white;
+}
+
+.item_of_the_day_controller .time::before {
+    content: "This deal ends in: "
 }
 
 .product_container {
@@ -168,4 +182,8 @@ header nav ul {
     -ms-transform:rotate(-45deg);
     -o-transform:rotate(-45deg);
     transform:rotate(-45deg);   
+  }
+
+  .back_forward {
+      font-size: 0.9rem;
   }

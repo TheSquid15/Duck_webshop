@@ -14,11 +14,14 @@ class home_controller extends DB_model {
             while($row = $result->fetch_assoc()) {
                 ?>
                 <div class="item_of_the_day_controller home_deal">
-                    <img src="<?php echo $row['productImage']?>" alt="">
+                    <img src="../resources/<?php echo $row['productImage']?>" alt="">
                     <h2 class="product_title"><?php echo $row['name']?></h2>
                     <div class="percentageBox"><h3>-<?php echo $row['percentage']?>%</h3></div>
+                    <div id="deal_time" class="time"></div>
                 </div>
                 <?php
+
+                $this->deal_time = $row['end_date'];
             }
         }
         else {
