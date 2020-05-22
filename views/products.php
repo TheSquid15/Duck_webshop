@@ -27,3 +27,5 @@ require('../includes/header.php');
     var countDownDate = new Date("<?php echo $items->deal_time; ?>").getTime();
 </script>
 <script src="../public/js/countdown.js"></script>
+<?php
+require('../includes/footer.php');

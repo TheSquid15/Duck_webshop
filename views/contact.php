@@ -67,3 +67,5 @@ if(isset($success_message)){
         </div>
     </div>
 </section>
+<?php
+require('../includes/footer.php');

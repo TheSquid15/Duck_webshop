@@ -9,7 +9,8 @@ class item_page_controller extends DB_model {
 
     public function show_items() {
 
-        $sql = "SELECT p.productID, p.name, p.productImage, p.price, p.categoryID, c.categoryName, pd.end_date, pd.percentage, pd.is_item_of_the_day
+        $sql = "SELECT p.productID, p.name, p.productImage, p.price, p.categoryID, c.categoryName, 
+                pd.end_date, pd.percentage, pd.is_item_of_the_day
                 FROM product p
                 JOIN category c ON p.categoryID = c.categoryID
                 LEFT JOIN product_of_the_day pd ON p.productID = pd.productID 
@@ -35,7 +36,16 @@ class item_page_controller extends DB_model {
                             <?php
                         }
                         ?>
-                        <small>Category - <?php echo $row['categoryName']?></small>
+                        <small>Category - <?php echo $row['categoryName']?></small> <?php
+                        if(isset($_SESSION["loggedIn"])) {
+                            if($_SESSION["loggedIn"] == true) { ?>
+                        <form class="d-flex justify-content-between" action="cart.php?action=add&item_id=<?php echo $row["productID"]?>" method="POST">
+                            <input class="form-control w-25 mb-2" type="number" name="quantity" min="0" value="1" />
+                            <input class="btn btn-primary" type="submit" name="submit" value="Add to cart">
+                        </form>
+                        <?php
+                            }
+                        } ?>
                     </div>
                 <?php
             }
@@ -44,7 +54,8 @@ class item_page_controller extends DB_model {
 
     public function item_of_the_day() {
 
-        $sql = "SELECT * FROM product_of_the_day JOIN product ON product_of_the_day.productID = product.productID";
+        $sql = "SELECT * FROM product_of_the_day 
+                JOIN product ON product_of_the_day.productID = product.productID";
         $result = $this->sql_query($sql);
 
         if($result->num_rows > 0) {

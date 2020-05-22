@@ -101,7 +101,7 @@ class admin_controller extends DB_model {
                         <?php } ?>
                     </div>
                     <div class="col-2 d-flex align-items-center justify-content-around">
-                        <a href="edit_item.php?item=<?php echo $row['productID']?>"><button type="button" class="btn btn-primary">Edit</button></a>
+                        <a href="upload_item.php?edit=true&item_id=<?php echo $row['productID']?>"><button type="button" class="btn btn-primary">Edit</button></a>
                         <a href="admin_dashboard.php?delete=true&item_id=<?php echo $row['productID']?>"><button type="button" class="btn btn-danger">Delete</button></a>
                     </div>
                 </div>
@@ -178,16 +178,22 @@ class admin_controller extends DB_model {
 
     public function message_panel() {
         if(!isset($_GET['message_page'])){
+            //if no page is specified, set it to 1
             $page = 1;
         }
         else {
+            //make the page be the same as the GET variable
             $page = $_GET['message_page'];
         }
+        //max items per page
         $results_per_page = 5;
+        //define the starting point of the query
         $this_page_first_result = ($page - 1)*$results_per_page;
         $number_of_rows_sql = "SELECT * FROM message";
         $number_result = $this->sql_query($number_of_rows_sql);
+        //get total number of items
         $number_of_rows = $number_result->num_rows;
+        //sql query with an offset, starting with 0-5
         $sql = "SELECT * FROM message LIMIT $this_page_first_result, $results_per_page";
         $result = $this->sql_query($sql);
         
@@ -304,6 +310,93 @@ class admin_controller extends DB_model {
             </div>
         </div>
         <?php
+        if(isset($_POST["opening-hours-submit"])) {
+            $update_times_sql = "UPDATE opening SET opening = ?, closing = ?, closed = ? WHERE dayID = ?";
+            $update_time_stmnt = $this->conn->prepare($update_times_sql);
+            $update_time_stmnt->bind_param("ssis", $opening_time, $closing_time, $closed, $id_of_day);
+
+            $opening_time = trim(htmlspecialchars($_POST["Sunday-open"]));
+            $closing_time = trim(htmlspecialchars($_POST["Sunday-close"]));
+            $closed = $_POST["Sunday-closed"];
+            $id_of_day = 1;
+            $update_time_stmnt->execute();
+
+            $opening_time = trim(htmlspecialchars($_POST["Monday-open"]));
+            $closing_time = trim(htmlspecialchars($_POST["Monday-close"]));
+            $closed = $_POST["Monday-closed"];
+            $id_of_day = 2;
+            $update_time_stmnt->execute();
+
+            $opening_time = trim(htmlspecialchars($_POST["Tuesday-open"]));
+            $closing_time = trim(htmlspecialchars($_POST["Tuesday-close"]));
+            $closed = $_POST["Tuesday-closed"];
+            $id_of_day = 3;
+            $update_time_stmnt->execute();
+
+            $opening_time = trim(htmlspecialchars($_POST["Wednesday-open"]));
+            $closing_time = trim(htmlspecialchars($_POST["Wednesday-close"]));
+            $closed = $_POST["Wednesday-closed"];
+            $id_of_day = 4;
+            $update_time_stmnt->execute();
+
+            $opening_time = trim(htmlspecialchars($_POST["Thursday-open"]));
+            $closing_time = trim(htmlspecialchars($_POST["Thursday-close"]));
+            $closed = (int)$_POST["Thursday-closed"];
+            $id_of_day = 5;
+            $update_time_stmnt->execute();
+
+            $opening_time = trim(htmlspecialchars($_POST["Friday-open"]));
+            $closing_time = trim(htmlspecialchars($_POST["Friday-close"]));
+            $closed = $_POST["Friday-closed"];
+            $id_of_day = 6;
+            $update_time_stmnt->execute();
+
+            $opening_time = trim(htmlspecialchars($_POST["Saturday-open"]));
+            $closing_time = trim(htmlspecialchars($_POST["Saturday-close"]));
+            $closed = $_POST["Saturday-closed"];
+            $id_of_day = 7;
+            $update_time_stmnt->execute();
+
+            $update_time_stmnt->close();
+            $message_success_opening = "Times updated succesfully";
+        }
+
+        if(isset($message_success_opening)) { ?>
+            <div class="alert-success mt-4"><?php echo $message_success_opening ?></div>
+        <?php
+        }
+        ?>
+        <div class="row m-2 mt-4 product_row">
+            <div class="col-12">
+                <h4 class="mt-2">Opening Hours</h4>
+                <div class="d-flex">
+                    <b class="w-100 mr-2"><p class="w-100">Opening time:</p></b>
+                    <b class="w-100 mr-2"><p class="w-100">Closing time:</p></b>
+                    <b class="w-25 mr-2"><p class="w-25">Closed/Open:</p></b>       
+                </div>
+                <form action="" method="POST">
+                 <?php
+                    $days_sql = "SELECT * FROM opening ORDER BY dayID";
+                    $days = $this->sql_query($days_sql);
+
+                    while($day = $days->fetch_assoc()) { ?>
+                    <p class="m-0 mb-2"><b><?php echo $day["day"]?>:</b></p>
+                    <div class="form-group d-flex mb-2">
+                        <input class="w-100 form-control mr-2" type="time" name="<?php echo $day["day"]?>-open" id="<?php echo $day["day"]?>-open" min="00:00" max="23:59" value="<?php echo $day["opening"]?>" required>
+                        <input class="w-100 form-control mr-2" type="time" name="<?php echo $day["day"]?>-close" id="<?php echo $day["day"]?>-close" min="00:00" max="23:59" value="<?php echo $day["closing"]?>" required>
+                        <select class="w-25 form-control mr-2" name="<?php echo $day["day"]?>-closed" id="<?php echo $day["day"]?>-closed" min="00:00" max="23:59" required>  
+                            <option value="0" <?php if($day["closed"] == false) {echo "selected";}?>>Open</option>
+                            <option value="1" <?php if($day["closed"] == true) {echo "selected";}?>>Closed</option>
+                        </select>
+                    </div>
+                    <?php
+                    }
+                ?>
+                    <input class="form-control mt-4 mb-3" type="submit" name="opening-hours-submit" value="Update opening hours">
+                </form>
+            </div>
+        </div>
+        <?php
         }
     }
 
@@ -385,5 +478,275 @@ class admin_controller extends DB_model {
             </div>
         </div>
         <?php
+    }
+
+    private function loadfile($filename) {
+        $image_info = getimagesize($filename);
+        $this->image_type = $image_info[2];
+
+        if($this->image_type == IMAGETYPE_JPEG){
+            $this->image = imagecreatefromjpeg($filename);
+        }
+        elseif($this->image_type == IMAGETYPE_PNG){
+            $this->image = imagecreatefrompng($filename);
+        }
+    }
+
+    private function save($filename, $image_type = IMAGETYPE_JPEG) {
+        if($image_type == IMAGETYPE_JPEG) {
+            imagejpeg($this->image, $filename);
+        }
+        elseif($image_type == IMAGETYPE_PNG) {
+            imagepng($this->image, $filename);
+        }
+    }
+
+    public function news_panel() {
+        if(isset($_POST["edit-news"])) {
+            if(isset($_POST["title"]) && isset($_POST["text"])) {
+                //if a file is uploaded
+                if($_FILES["image"]["name"]){
+                    $sanatized_article_id = filter_var($_GET["article_id"], FILTER_SANITIZE_NUMBER_INT);
+                    //get the old picture from database
+                    $fetch_article_image_sql = "SELECT image FROM news WHERE newsID = $sanatized_article_id";
+                    $get_article_image = $this->sql_query($fetch_article_image_sql);
+                    $image_to_delete = $get_article_image->fetch_assoc();
+                    //delete the original picture
+                    unlink("../resources/$image_to_delete[image]");
+
+                    $imageName = $_FILES["image"]["name"];
+                    $file = $_FILES["image"]["tmp_name"];
+                    $imageType = getimagesize($file);
+
+                    //check if the file is any of these image file constants
+                    if(($imageType[2] == 2) || ($imageType[2] == 0) || ($imageType[2] == 3)) {
+                        $size = filesize($_FILES["image"]["tmp_name"]);
+
+                        if($size <= MAX_SIZE*1024) {
+                            $prefix = uniqid();
+                            $newImageName = $prefix . "_news_" . $imageName;
+                            $newName = "../resources/" . $newImageName;
+                            $this->loadfile($file);
+                        }
+                        else {
+                            $message = "Filesize is too big";
+                        }
+                    } 
+                    else {
+                        $message = "Invalid file-type";
+                    }
+
+                    $this->save($newName, IMAGETYPE_JPEG);
+
+                    $news_statement = $this->conn->prepare("UPDATE news SET title = ?, message = ?, image = ? WHERE newsID = ?");
+                    $news_statement->bind_param("sssi", $news_title, $news_message, $news_image, $article_id);
+
+                    $news_title = trim(htmlspecialchars($_POST["title"]));
+                    $news_message = trim(htmlspecialchars($_POST["text"]));
+                    $news_image = $newImageName;
+                    $article_id = $sanatized_article_id;
+                    $news_statement->execute();
+
+                    $message_success = "News article successfully edited";
+                }
+                else {
+                    $sanatized_article_id = filter_var($_GET["article_id"], FILTER_SANITIZE_NUMBER_INT);
+
+                    $news_statement = $this->conn->prepare("UPDATE news SET title = ?, message = ? WHERE newsID = ?");
+                    $news_statement->bind_param("ssi", $news_title, $news_message, $article_id);
+
+                    $news_title = trim(htmlspecialchars($_POST["title"]));
+                    $news_message = trim(htmlspecialchars($_POST["text"]));
+                    $article_id = $sanatized_article_id;
+                    $news_statement->execute();
+
+                    $message_success = "News article successfully edited";
+                }
+            }
+            else {
+                $message = "Please fill out all of the fields";
+            }
+        }
+
+        if(isset($_POST["submit-news"])) {
+            if(isset($_POST["title"]) && isset($_POST["text"])) {
+                if($_FILES["image"]["name"]){
+                    $imageName = $_FILES["image"]["name"];
+                    $file = $_FILES["image"]["tmp_name"];
+                    $imageType = getimagesize($file);
+
+                    if(($imageType[2] == 2) || ($imageType[2] == 0) || ($imageType[2] == 3)) {
+                        $size = filesize($_FILES["image"]["tmp_name"]);
+
+                        if($size <= MAX_SIZE*1024) {
+                            $prefix = uniqid();
+                            $newImageName = $prefix . "_news_" . $imageName;
+                            $newName = "../resources/" . $newImageName;
+                            $this->loadfile($file);
+                        }
+                        else {
+                            $message = "Filesize is too big";
+                        }
+                    } 
+                    else {
+                        $message = "Invalid file-type";
+                    }
+
+                    $this->save($newName, IMAGETYPE_JPEG);
+
+                    $news_statement = $this->conn->prepare("INSERT INTO news VALUES (NULL, ?, ?, ?, DEFAULT)");
+                    $news_statement->bind_param("sss", $news_title, $news_message, $news_image);
+
+                    $news_title = trim(htmlspecialchars($_POST["title"]));
+                    $news_message = trim(htmlspecialchars($_POST["text"]));
+                    $news_image = $newImageName;
+                    $news_statement->execute();
+
+                    $message_success = "News article uploaded";
+                }
+                else {
+                    $message = "Please upload a picture";
+                }
+            }
+            else {
+                $message = "Please fill out all of the fields";
+            }
+        }
+
+        if(isset($message)) { ?>
+            <div class="alert-danger"><?php echo $message ?></div>
+        <?php
+        }
+        if(isset($message_success)) { ?>
+            <div class="alert-success"><?php echo $message_success?></div>
+        <?php
+        }
+
+        if(isset($_GET["edit"])) {
+            if(isset($_GET["article_id"])) {
+                $sanatized_article_id = filter_var($_GET["article_id"], FILTER_SANITIZE_NUMBER_INT);
+                $sql_for_article = "SELECT * FROM news WHERE newsID = $sanatized_article_id";
+                $fetch_article = $this->sql_query($sql_for_article);
+                if($fetch_article->num_rows > 0) {
+                    $article = $fetch_article->fetch_assoc(); ?>
+                    <div class="row product_row m-3">
+                        <div class="col-12">
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="title">Title:</label>
+                                    <input class="form-control mb-3" type="text" name="title" id="title" value="<?php echo $article["title"]?>" required>
+                                    <label for="text">Text:</label>
+                                    <textarea class="form-control mb-3" name="text" id="text" rows="10" required><?php echo $article["message"]?></textarea>
+                                    <label for="image">Image file:</label>
+                                    <input class="form-control-file mb-3" type="file" name="image" id="image">
+                                    <input class="form-control" type="submit" name="edit-news" value="Post">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                <?php
+                }
+                else {
+                    $message = "This id does not match any of the records";
+                }
+            }
+        }
+        
+        else{
+        ?>
+        <div class="row product_row m-3">
+            <div class="col-12">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input class="form-control mb-3" type="text" name="title" id="title" required>
+                        <label for="text">Text:</label>
+                        <textarea class="form-control mb-3" name="text" id="text" rows="10" required></textarea>
+                        <label for="image">Image file:</label>
+                        <input class="form-control-file mb-3" type="file" name="image" id="image">
+                        <input class="form-control" type="submit" name="submit-news" value="Post">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <?php
+        }
+    }
+
+    public function order_panel() {
+        if(!isset($_GET['order_page'])){
+            $page = 1;
+        }
+        else {
+            $page = $_GET['order_page'];
+        }
+        $results_per_page = 3;
+        $this_page_first_result = ($page - 1)*$results_per_page;
+        $fetching_order_sql = "SELECT * FROM orders JOIN user ON user.userID = orders.userID";
+        $orders_pages_query = $this->sql_query($fetching_order_sql);
+        $number_of_rows = $orders_pages_query->num_rows;
+        $sql = "SELECT * FROM orders JOIN user ON user.userID = orders.userID JOIN address ON address.userID = user.userID LIMIT $this_page_first_result, $results_per_page";
+        $orders_result = $this->sql_query($sql);
+        $number_of_pages = ceil($number_of_rows/$results_per_page);
+
+        if($orders_result->num_rows > 0) {
+            while($order = $orders_result->fetch_assoc()) {
+                $orders_sql = "SELECT * FROM order_overview WHERE orderID = '$order[orderID]'";
+                $order_info = $this->sql_query($orders_sql);
+        ?>
+        <div class="w-100">
+            <p class="m-0 mb-2"><?php echo "Order ID: $order[orderID]"?></p>
+        </div>
+        <div class="row product_row m-3 p-3">
+            <div class="col-12 d-flex"> 
+                <div class="w-100 p-3 m-2 d-flex flex-column items_overview rounded">
+                    <p><b>Products: </b></p><?php
+                $total_price = 0;
+                while($order_item = $order_info->fetch_assoc()) { ?>
+                    <div>
+                        <p class="m-0"><?php echo $order_item["quantity"]?> x <?php echo $order_item["name"]?> - <?php echo $order_item["price"] * $order_item["quantity"]?></p>
+                    </div>
+                <?php
+                    $total_price += $order_item["price"];
+                }
+                ?>
+                    <div>
+                        <p class="m-0 mt-3"><b>Total:</b> <?php echo $total_price?> Slices of bread</p>
+                    </div>
+                </div>
+                <div class="w-100 p-3 m-2 items_overview rounded d-flex flex-column">
+                    <p><b>Customer info: </b></p>
+                    <p class="m-0"><b>Username:</b> <?php echo $order["username"]?></p>
+                    <p class="m-0"><b>Email:</b> <?php echo $order["email"]?></p>
+                    <p class="m-0"><b>Name:</b> <?php echo $order["fname"] . " " . $order["lname"]?></p>
+                    <p class="m-0"><b>Shipping address:</b> <?php echo $order["street"] . " " . $order["postalcode"] . " " . $order["city"] . " - " . $order["country"]?></p>
+                </div>
+            </div>
+            <div class="w-100 d-flex justify-content-end mr-4 ml-4">
+                <button class="btn btn-primary mr-2">Generate invoice</button>
+                <button class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+        <?php
+            }
+        ?>
+        <div class="col-12 m-0 d-flex align-items-center justify-content-center"><small class="">Pages</small></div>
+        <div class="col-8 d-flex justify-content-around align-items-center m-auto"> 
+            <a href="admin_dashboard.php?panel=orders&order_page=<?php if($page > 1 ) {echo $page - 1;}else{ echo $page = 1; } ?>" class="back_forward"><button class="btn btn-primary">< back</button></a>
+            <div>
+            <?php
+            for($page = 1; $page <= $number_of_pages; $page++) { ?>
+                <a href="admin_dashboard.php?panel=orders&order_page=<?php echo $page ?>" class="m-1"><?php echo $page ?></a>
+            <?php 
+            } ?>
+            </div>
+            <a href="admin_dashboard.php?panel=orders&order_page=<?php if($page < $number_of_pages ) {echo $page + 1;}else{ echo $page = $number_of_pages; } ?>" class="back_forward"><button class="btn btn-primary">next ></button></a>
+        </div>
+        <?php
+        }
+        else { ?>
+            <div class="row product_row m-3 p-2">No orders</div>
+        <?php
+        }
     }
 }

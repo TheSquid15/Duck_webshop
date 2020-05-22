@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS Duck_DB;
+/* DROP DATABASE IF EXISTS Duck_DB;
 CREATE DATABASE Duck_DB;
 USE Duck_DB;
-
+ */
 CREATE TABLE user (
     userID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     username varchar(255) NOT NULL,
@@ -35,8 +35,7 @@ CREATE TABLE address (
 );
 
 INSERT INTO address VALUES
-(NULL, "Fynsgade 4", "Denmark", 1, 6700, "Esbjerg"),
-(NULL, "Spangsbjerg Kirkevej 109", "Denmark", 1, 6700, "Esbjerg");
+(NULL, "Fynsgade 4", "Denmark", 1, 6700, "Esbjerg");
 
 CREATE TABLE about_Us (
     slogan varchar(255),
@@ -58,7 +57,7 @@ CREATE TABLE message (
 );
 
 INSERT INTO message VALUES
-(NULL, "Jammed rifle", "Hey guys, I was trying to shoot the old lady that keeps feeding the pigeons but my rifle jammed and I can't unjamm it! Could you please repair it or send a replacement, this bitch has to die ASAP.", DEFAULT, "v.vignisson@gmail.com");
+(NULL, "Jammed rifle", "Hey guys, I was trying to shoot the old lady that keeps feeding the pigeons but my rifle jammed and I can't unjamm it! Could you please repair it or send a replacement, this bitch has to die ASAP!", DEFAULT, "v.vignisson@gmail.com");
 
 CREATE TABLE orders (
     orderID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -104,10 +103,20 @@ INSERT INTO product VALUES
 CREATE TABLE basket (
     orderID int NOT NULL,
     productID int NOT NULL,
+    quantity int NOT NULL,
     CONSTRAINT PK_Basket PRIMARY KEY (orderID, productID),
     FOREIGN KEY (orderID) REFERENCES orders (orderID),
     FOREIGN KEY (productID) REFERENCES product (productID)
 );
+
+INSERT INTO basket VALUES
+(1, 3, 1),
+(1, 4, 1),
+(1, 5, 2),
+(1, 2, 1),
+(2, 2, 1),
+(2, 6, 1),
+(2, 8, 1);
 
 CREATE TABLE product_of_the_day (
     end_date DATETIME NOT NULL,
@@ -121,7 +130,7 @@ INSERT INTO product_of_the_day VALUES
 ("2020-06-15 12:00:00", 40, 3, 1);
 
 CREATE TABLE news (
-    newsID int NOT NULL PRIMARY KEY,
+    newsID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title varchar(255) NOT NULL,
     message LONGTEXT,
     image varchar(255),
@@ -137,6 +146,23 @@ This is a declaration of War!", "duckiesSnapshot.png", DEFAULT),
 leader of Duckie's kingdom, being taken prisoner by a local rebel group. More 
 information as the story unfolds.", "duckiesSnapshot.png", DEFAULT);
 
+CREATE TABLE opening (
+    dayID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `day` varchar(255) NOT NULL,
+    opening varchar(255) NOT NULL,
+    closing varchar(255) NOT NULL,
+    closed BOOL NOT NULL
+);
+
+INSERT INTO opening VALUES
+(1, "Sunday", "08:00", "18:00", false),
+(2, "Monday", "07:00", "20:00", false),
+(3, "Tuesday", "07:00", "20:00", false),
+(4, "Wednesday", "08:00", "19:00", false),
+(5, "Thursday", "08:00", "18:00", false),
+(6, "Friday", "10:00", "20:00", false),
+(7, "Saturday", "00:00", "00:00", true);
+
 CREATE VIEW products_full_information AS
 SELECT DISTINCT p.productID, p.name, p.productImage, p.price, p.categoryID, c.categoryName, pd.end_date, pd.percentage, pd.is_item_of_the_day
 FROM product p
@@ -145,7 +171,7 @@ LEFT JOIN product_of_the_day pd ON p.productID = pd.productID
 ORDER BY name ASC;
 
 CREATE VIEW order_overview AS
-SELECT b.orderID, b.productID, p.name, p.price, ca.categoryName, o.time, u.userID, u.username, u.email, u.fname, u.lname, ad.street, ad.country, ad.postalcode, ad.city
+SELECT b.orderID, b.productID, p.name, p.price, b.quantity, ca.categoryName, o.time, u.userID, u.username, u.email, u.fname, u.lname, ad.street, ad.country, ad.postalcode, ad.city
 FROM basket b
 JOIN orders o ON o.orderID = b.orderID
 JOIN product p ON p.productID = b.productID

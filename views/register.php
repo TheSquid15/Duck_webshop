@@ -90,3 +90,5 @@ if(isset($message)) { ?>
         </div>
     </div>
 </section>
+<?php
+require('../includes/footer.php');

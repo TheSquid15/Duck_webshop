@@ -9,21 +9,7 @@ class login_controller extends DB_model{
     public $user;
     public $password;
 
-    public static function is_logged_in() {
-        return isset($_SESSION['loggedIn']);
-    }
-
-    public static function login_guard() {
-        if (!self::is_logged_in()) {
-            header('Location: login.php');
-        }
-    }
-
-    /* public function sanatize_input($username, $password) {
-        $this->user = trim(htmlspecialchars($username));
-        $this->password = trim(htmlspecialchars($password));
-    } */
-
+   
     public function log_in($user, $password) {
         if(!password_verify($password, $user['password'])) {
             return false;
@@ -60,6 +46,7 @@ class login_controller extends DB_model{
         $DBresult = $prep->fetch_assoc();
 
         if ($DBresult["username"] == $san_user){
+            //run login method in this class
             if($this->log_in($DBresult, $san_password) == 1){
                 if(isset($_SESSION["loggedIn"]) && isset($_SESSION["user"]) && isset($_SESSION["username"])){
                     header("Location: index.php");

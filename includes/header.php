@@ -62,6 +62,7 @@ header('Content-Type: text/html; charset=utf-8');
         <div class="navbar-nav">
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link active" href="contact.php">Contact</a>
+        <a class="nav-item nav-link active" href="news.php">News</a>
         <?php
         if(isset($_SESSION['admin'])) { 
             if($_SESSION['admin'] == true) {?>
@@ -79,6 +80,7 @@ header('Content-Type: text/html; charset=utf-8');
         <?php 
         }
         else if($_SESSION["loggedIn"] == true) { ?>
+            <a class="nav-tem nav-link active d-flex align-items-center justify-content-center mr-5 position-relative" href="cart.php">Cart <img class="ml-2" src="../resources/cart.svg" alt="" height="25px" width="25px"><div class="position-absolute small_cart_number d-flex align-items-center justify-content-center"><p class="m-0"><?php if(isset($_SESSION["cart"]["cart_item"])){ echo count($_SESSION["cart"]["cart_item"]);}else{echo 0;}?></p></div></a>
             <a class="nav-item nav-link active">Welcome, <?php echo $_SESSION["username"]?></a>
             <a class="nav-item nav-link active" href="login.php?logout=1">Logout</a>
         <?php

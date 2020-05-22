@@ -5,7 +5,6 @@ include(MODEL);
 
 class contact_controller extends DB_model {
 
-    private $business_email = "vida0175@easv365.dk";
     private $automated_message = "
     <html>
         <body>
@@ -23,6 +22,9 @@ class contact_controller extends DB_model {
     ";
 
     public function send_form($subject, $message, $email) {
+        $fetch_email = $this->sql_query("SELECT email FROM about_us");
+        $business_email = $fetch_email->fetch_assoc();
+        
         $san_subject = trim(htmlspecialchars($subject));
         $san_message = trim(htmlspecialchars($message));
         $san_email = trim(htmlspecialchars($email));
@@ -42,7 +44,7 @@ class contact_controller extends DB_model {
         $headers[] = "To: <$san_email>";
         $headers[] = "From: Quack-Tac Team <duckshop.noreply@prep4this.com>";
 
-        mail($this->business_email, $san_subject . $timestamp, $san_message, "From: $san_email");
+        mail($business_email["email"], $san_subject . $timestamp, $san_message, "From: $san_email");
         mail($san_email, "re: " . $san_subject, "Dear sender, <br>" . $this->automated_message, implode("\r\n", $headers));
     }
 } 

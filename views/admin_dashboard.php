@@ -5,11 +5,13 @@ spl_autoload_register(function($class) {
     include "../controller/" . $class . ".php";
 });
 
+admin_controller::login_guard();
+
+$dashboard = new admin_controller();
+
 if(!isset($_SESSION['admin']) && $_SESSION['admin'] !== true) {
     header('Location: index.php');
 }
-
-$dashboard = new admin_controller();
 
 if(isset($_GET['delete'])) {
     if($_SESSION["admin"]  == true) {
@@ -39,7 +41,7 @@ if(isset($_GET['success']) && $_GET['success'] == 1) {
 require('../includes/header.php');
 
 if(isset($message)) {
-    echo "<div class='alert-success'>$message</div>";
+    echo "<div class='alert-success sticky-top'>$message</div>";
 }
 ?>
 <div class="d-flex" id="admin_wrapper">
@@ -49,9 +51,11 @@ if(isset($message)) {
             <a href="admin_dashboard.php"><li class="list-group-item">All</li></a>
             <a href="admin_dashboard.php?panel=products"><li class="list-group-item">Products</li></a>
             <a href="admin_dashboard.php?panel=category"><li class="list-group-item">Categories</li></a>
+            <a href="admin_dashboard.php?panel=news"><li class="list-group-item">News</li></a>
             <a href="admin_dashboard.php?panel=message"><li class="list-group-item">Messages</li></a>
             <a href="admin_dashboard.php?panel=general_info"><li class="list-group-item">General Information</li></a>
             <a href="admin_dashboard.php?panel=address"><li class="list-group-item">Add Address</li></a>
+            <a href="admin_dashboard.php?panel=orders"><li class="list-group-item">Orders</li></a>
         </ul>
     </div>
     <div class="container p-4"> <?php 
@@ -71,6 +75,12 @@ if(isset($message)) {
             if($_GET['panel'] == "address") {
                 include('../components/address_panel.php');
             }
+            if($_GET['panel'] == "news") {
+                include('../components/news_panel.php');
+            }
+            if($_GET['panel'] == "orders") {
+                include('../components/orders_panel.php');
+            }
         }
         else {
             include('../components/all_panels.php');
@@ -81,3 +91,6 @@ if(isset($message)) {
         } ?>
     </div>
 </div>
+
+<?php
+require('../includes/footer.php');

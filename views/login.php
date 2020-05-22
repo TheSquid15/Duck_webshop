@@ -46,6 +46,7 @@ if (isset($_POST["submit"])) {
 </section>
 
 <?php
+require('../includes/footer.php');
 /* if(isset($_POST['submit'])) {
 
     $login_controller->sanatize_input($_POST['username'], $_POST['password']);

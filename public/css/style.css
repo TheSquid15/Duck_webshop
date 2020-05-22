@@ -1,189 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap');
+
+* {
+font-family: 'Poppins', sans-serif;
+}
+
 body {
-    margin: 0;
+margin: 0;
 }
 
 header {
-    height: 60px;
-    overflow: visible;
+height: 60px;
+overflow: visible;
 }
 
 header nav {
-    /* width: 100%; */
-    float: right;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* width: 100%; */
+float: right;
+height: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
 header nav ul {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    list-style: none;
+display: flex;
+justify-content: space-around;
+align-items: center;
+list-style: none;
 }
 
 .shop_logo {
-    height: 100px;
-    width: auto;
-    z-index: 9999;
-    margin: -10px 0 0 0;
+height: 100px;
+width: auto;
+z-index: 9999;
+margin: -10px 0 0 0;
 }
 
 .main-menu {
-    width: 300px;
+width: 300px;
 }
 
 .login-menu {
-    width: 200px;
-    float: right;
+width: 200px;
+float: right;
 }
 
 .product_of_the_day_container {
-    height: 600px;
-    width: 100%;
+height: 600px;
+width: 100%;
 }
 
 .item_of_the_day_controller {
-    width: 100%;
-    height: 100%;
-    position: relative;
+width: 100%;
+height: 100%;
+position: relative;
 }
 
 .home_deal {
-    height: 55vh;
+height: 55vh;
 }
 
 .item_of_the_day_controller img {
-    object-fit: cover;
-    object-position: 30% 25%;
-    width: 100%;
-    height: 100%; 
+object-fit: cover;
+object-position: 30% 25%;
+width: 100%;
+height: 100%; 
 }
 
 .item_of_the_day_controller .percentageBox {
-    position: absolute;
-    color: white;
-    bottom: -25px;
-    right: 15px;
-    font-size: 3.0em;
-    padding: 40px;
-    background-image: url('../../resources/percentage_bubble.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+position: absolute;
+color: white;
+bottom: -25px;
+right: 15px;
+font-size: 3.0em;
+padding: 40px;
+background-image: url('../../resources/percentage_bubble.svg');
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
 }
 
 .item_of_the_day_controller .product_title {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    font-size: 3.0em;
-    margin: 0;
-    font-weight: bold;
-    color: white;
+position: absolute;
+top: 15px;
+left: 20px;
+font-size: 3.0em;
+margin: 0;
+font-weight: bold;
+color: white;
 }
 
 .item_of_the_day_controller .time {
-    position: absolute;
-    bottom: 0;
-    left: 15px;
-    font-size: 40px;
-    font-weight: 500;
-    color: white;
+position: absolute;
+bottom: 0;
+left: 15px;
+font-size: 40px;
+font-weight: 500;
+color: white;
 }
 
 .item_of_the_day_controller .time::before {
-    content: "This deal ends in: "
+content: "This deal ends in: "
 }
 
 .product_container {
-    display: grid;
-    height: auto;
-    padding: 20px;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
-    grid-gap: 15px;
+display: grid;
+height: auto;
+padding: 20px;
+grid-template-columns: repeat(12, 1fr);
+grid-template-rows: auto;
+grid-gap: 15px;
 }
 
 .item {
-    height: 500px;
-    width: 350px;
-    grid-auto-columns: auto;
+height: 500px;
+width: 350px;
+grid-auto-columns: auto;
 }
 
 .item img{
-    object-fit: cover;
-    width: 100%;
-    height: 60%;
-    border-radius: 5px;
+object-fit: cover;
+width: 100%;
+height: 60%;
+border-radius: 5px;
 }
 
 .form-controller {
-    padding-top: 20px;
+padding-top: 20px;
 }
 
 .old_price {
-    position: relative;
-    width: 35px;
+position: relative;
+width: 35px;
 }
 
 .old_price:before {
-    position: absolute;
-    content: "";
-    left: 0;
-    top: 50%;
+position: absolute;
+content: "";
+left: 0;
+top: 50%;
+right: 0;
+border-top: 2px solid #db0b0b;
+border-color: inherit;
+
+-webkit-transform:rotate(-20deg);
+-moz-transform:rotate(-20deg);
+-ms-transform:rotate(-20deg);
+-o-transform:rotate(-20deg);
+transform:rotate(-20deg);
+}
+
+.sidemenu {
+    width: 250px;
+    height: 100%;
+    position: sticky;
+    top: 0;
+    background-color: #d8d8d8;
+}   
+
+.product_panel {
+    background-color: rgb(245, 245, 245);
+    border-radius: 5px;
+}
+
+.product_row {
+    background-color: rgb(226, 226, 226);
+    border-radius: 10px;
+    padding: 8px 0 8px 0;
+}
+
+.admin_old_price {
+    position: relative;
+    width: 20px;
+}
+
+.admin_old_price::before {
+position: absolute;
+content: "";
+left: 0;
+top: 50%;
+right: 0;
+border-top: 2px solid #db0b0b;
+border-color: inherit;
+
+-webkit-transform:rotate(-45deg);
+-moz-transform:rotate(-45deg);
+-ms-transform:rotate(-45deg);
+-o-transform:rotate(-45deg);
+transform:rotate(-45deg);   
+}
+
+.back_forward {
+    font-size: 0.9rem;
+}
+
+.news-image {
+    width: 100%;
+}
+
+.news-header {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 400px;
+    color: white;
+}
+
+.news-header h1 {
+    font-weight: 700;
+    color: #FFFFFF;
+    text-shadow: #FFF 0px 0px 5px, #FFF 0px 0px 10px, #FFF 0px 0px 15px, #FF2D95 0px 0px 20px, #FF2D95 0px 0px 30px, #FF2D95 0px 0px 40px, #FF2D95 0px 0px 50px, #FF2D95 0px 0px 75px;
+}
+
+.news-title {
+    font-weight: 700;
+}
+
+.items_overview {
+    background-color: white;
+}
+
+.footer_container {
+    background-color: #d8d8d8;
+}
+
+.footer_controller {
+    height: 100px;
+}
+
+.small_cart_number {
+    width: 16px;
+    height: 16px;
+    font-size: 0.7em;
     right: 0;
-    border-top: 2px solid #db0b0b;
-    border-color: inherit;
-  
-    -webkit-transform:rotate(-20deg);
-    -moz-transform:rotate(-20deg);
-    -ms-transform:rotate(-20deg);
-    -o-transform:rotate(-20deg);
-    transform:rotate(-20deg);
-  }
+    bottom: 5px;
+    color: #343a40;
+    background-color: white;
+    font-weight: 700;
+    border-radius: 10px;
+}
 
-  .sidemenu {
-      width: 250px;
-      height: 100%;
-      position: sticky;
-      top: 0;
-      background-color: #d8d8d8;
-    }   
+.card_box {
+    -webkit-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.37);
+    -moz-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.37);
+    box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.37);
+}
 
-  .product_panel {
-      background-color: rgb(245, 245, 245);
-      border-radius: 5px;
-  }
-
-  .product_row {
-      background-color: rgb(226, 226, 226);
-      border-radius: 10px;
-      padding: 8px 0 8px 0;
-  }
-
-  .admin_old_price {
-      position: relative;
-      width: 20px;
-  }
-
-  .admin_old_price::before {
-    position: absolute;
-    content: "";
-    left: 0;
-    top: 50%;
-    right: 0;
-    border-top: 2px solid #db0b0b;
-    border-color: inherit;
-  
-    -webkit-transform:rotate(-45deg);
-    -moz-transform:rotate(-45deg);
-    -ms-transform:rotate(-45deg);
-    -o-transform:rotate(-45deg);
-    transform:rotate(-45deg);   
-  }
-
-  .back_forward {
-      font-size: 0.9rem;
-  }
+.news_card_top {
+    height: 220px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
